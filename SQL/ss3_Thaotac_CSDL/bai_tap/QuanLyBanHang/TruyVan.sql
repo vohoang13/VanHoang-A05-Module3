@@ -64,7 +64,7 @@ From orders);
 
 -- Hiển thị mã hóa đơn, ngày bán và giá tiền của từng hóa đơn
 Select orders.oID, orders.oDate, sum(orderdetail.odQTY * product.pPrice) As 'Tổng đơn'
-From (orders
-join orderdetail on orders.oID = orderdetail.oID)
+From orders
+join orderdetail on orders.oID = orderdetail.oID
 join product on orderdetail.pID = product.pID
 Group by orders.oID;
