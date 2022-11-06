@@ -59,7 +59,37 @@ group by nv.ma_nhan_vien -- Gộp nhóm theo mã nhân viên có trong hợp đ�
 having count(hd.ma_nhan_vien) between 1 and 3; -- tính số lượng hợp đồng  từng nhân viên làm được
 
 -- TASK 16
-delete from nhanvien
+delete from nhan_vien
 where nhan_vien.ma_nhan_vien not in (select ma_nhan_vien
 from hop_dong);
+
+-- TASK 17
+
+
+
+-- TASK 18 
+
+-- CHƯA XONG
+delete from khach_hang
+where ma_khach_hang in (select ma_khach_hang
+from hop_dong
+where year(ngay_lam_hop_dong) < '2021');
+
+-- TASK 19
+update dich_vu_di_kem dvdk
+set gia = gia * 2
+where ma_dich_vu_di_kem 
+in (select ma_dich_vu_di_kem 
+from hop_dong_chi_tiet hdct
+join hop_dong hd on hd.ma_hop_dong = hdct.ma_hop_dong
+where year(ngay_lam_hop_dong) = '2020'
+group by ma_dich_vu_di_kem
+having sum(so_luong) > 10 );
+
+-- TASK 20
+select ma_nhan_vien as id, ho_ten, email, so_dien_thoai, ngay_sinh, dia_chi from nhan_vien
+union
+select ma_khach_hang as id, ho_ten, email, so_dien_thoai, ngay_sinh, dia_chi from khach_hang;
+
+
 
