@@ -1,0 +1,98 @@
+*{
+    margin: 0;
+}
+#header {
+    height: 30px;
+    width: 100%;
+    padding:0;
+    margin:0;
+    background-color: gray;
+    border: 1px solid #CDCDCD;
+}
+
+#header ul {
+    padding: 0;
+    margin: 0;
+}
+
+#header li {
+    position: relative;
+    padding: 0px;
+    margin: 0;
+    float: left;
+    list-style: none;
+}
+
+#header li a {
+    width: 50px;
+    padding: 10px;
+    color: black;
+    display: block;
+    text-decoration: none;
+    text-align: center;
+    line-height: 10px;
+}
+
+#header li a:hover {
+    color: #CDCDCD;
+    background-color: black;
+}
+
+#nav {
+    width: 25%;
+    height: 500px;
+    background-color: #363636;
+    float: left;
+}
+
+#nav p {
+    padding-left: 100px;
+}
+
+#nav p a{
+    color: blue;
+    text-decoration: none;
+    line-height: 50px;
+}
+
+#content {
+    height: 500px;
+    margin: 0;
+    padding: 0;
+    width: 50%;
+    float: left;
+}
+
+#content h1, p, h3{
+    padding: 10px;
+    line-height: 30px;
+}
+
+#aside {
+    height: 500px;
+    width: 25%;
+    float: left;
+    background-color: #363636;
+}
+
+#aside div p{
+    margin: 50px;
+    width: 150px;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px 5px #363636 inset;
+}
+
+#footer {
+    background-color: #B5B5B5;
+    clear: both;
+}
+
+#footer p {
+    color: white;
+    text-align: center;
+}
+
