@@ -1,4 +1,4 @@
-package reponsitory;
+package responsitory;
 
 import model.Book;
 
@@ -11,7 +11,7 @@ public interface IBookResponsitory {
 
     public Book findById(String id);
 
-    public void update(Book book);
-
     public void delete(String id);
+
+    public void update(String id,Book book);
 }

@@ -1,7 +1,5 @@
 package model;
 
-import java.util.Objects;
-
 public class Book {
     private String id;
     private String name;
@@ -9,6 +7,7 @@ public class Book {
     private Category category;
 
     public Book() {
+
     }
 
     public Book(String id, String name, String author) {
@@ -22,10 +21,6 @@ public class Book {
         this.name = name;
         this.author = author;
         this.category = category;
-    }
-
-    public Book(String id) {
-        this.id = id;
     }
 
     public String getId() {
@@ -59,13 +54,4 @@ public class Book {
     public void setCategory(Category category) {
         this.category = category;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Book book = (Book) o;
-        return Objects.equals(id, book.id);
-    }
-
 }

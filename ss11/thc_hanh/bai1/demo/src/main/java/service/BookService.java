@@ -1,13 +1,13 @@
 package service;
 
 import model.Book;
-import reponsitory.BookResponsitoryImpl;
-import reponsitory.IBookResponsitory;
+import responsitory.BookResponsitory;
+import responsitory.IBookResponsitory;
 
 import java.util.List;
 
 public class BookService implements IBookService{
-    private IBookResponsitory bookResponsitory = new BookResponsitoryImpl();
+    private IBookResponsitory bookResponsitory = new BookResponsitory();
     @Override
     public void create(Book book) {
         bookResponsitory.create(book);
@@ -24,12 +24,12 @@ public class BookService implements IBookService{
     }
 
     @Override
-    public void update(Book book) {
-
+    public void delete(String id) {
+        bookResponsitory.delete(id);
     }
 
     @Override
-    public void delete(String id) {
-        bookResponsitory.delete(id);
+    public void update(String id,Book book) {
+        bookResponsitory.update(id,book);
     }
 }

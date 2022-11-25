@@ -1,16 +1,10 @@
 package model;
 
-import java.util.Objects;
-
 public class Category {
     private String id;
     private String name;
 
     public Category() {
-    }
-
-    public Category(String id) {
-        this.id = id;
     }
 
     public Category(String id, String name) {
@@ -34,11 +28,4 @@ public class Category {
         this.name = name;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Category category = (Category) o;
-        return Objects.equals(id, category.id);
-    }
 }
