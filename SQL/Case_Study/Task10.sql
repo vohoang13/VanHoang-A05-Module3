@@ -64,12 +64,34 @@ where nhan_vien.ma_nhan_vien not in (select ma_nhan_vien
 from hop_dong);
 
 -- TASK 17
+update khach_hang 
+set ma_loai_khach = 3
+where ma_khach_hang = 2;
 
+-- CHƯA XONG
+update khach_hang 
+set ma_loai_khach = 1
+where ma_khach_hang in
+(select hd.ma_khach_hang 
+from hop_dong hd
+join dich_vu dv on dv.ma_dich_vu = hd.ma_dich_vu
+join hop_dong_chi_tiet hdct on hdct.ma_hop_dong = hdct.ma_hop_dong
+join dich_vu_di_kem dvdk on dvdk.ma_dich_vu_di_kem = hdct.ma_dich_vu_di_kem
+where so_luong + chi_phi_thue * gia > 10000000 and year(hd.ngay_lam_hop_dong) = '2021');
+ 
 
 
 -- TASK 18 
 
 -- CHƯA XONG
+delete from hop_dong_chi_tiet 
+where ma_hop_dong in 
+(select hd.ma_hop_dong from hop_dong hd 
+join hop_dong_chi_tiet hdct on hdct.ma_hop_dong = hd.ma_hop_dong
+join khach_hang kh on kh.ma_khach_hang = hd.ma_khach_hang
+where year(ngay_lam_hop_dong) < '2021');
+delete from hop_dong 
+where year(ngay_lam_hop_dong) < '2021';
 delete from khach_hang
 where ma_khach_hang in (select ma_khach_hang
 from hop_dong
