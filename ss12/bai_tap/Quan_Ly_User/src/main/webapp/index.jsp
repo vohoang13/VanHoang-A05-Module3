@@ -18,5 +18,6 @@
 <a href="/user?action=findById">SearchId</a>
 <a href="/user?action=updateByName">UpdateName</a>
 <a href="/user?action=deleteName">DeleteName</a>
+<a href="/user?action=addTransaction">AddTransaction</a>
 </body>
 </html>

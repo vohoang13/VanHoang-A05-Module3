@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 @WebServlet(name = "UserController", urlPatterns = "/user")
@@ -52,6 +53,9 @@ public class UserController  extends HttpServlet {
                 break;
             case "deleteName":
                 showDeleteName(req,resp);
+                break;
+            case "addTransaction":
+                showCreate(req,resp);
                 break;
             default:
                 showList(req,resp);
@@ -127,9 +131,26 @@ public class UserController  extends HttpServlet {
             case "deleteName":
                 doDeleteName(req,resp);
                 break;
+            case "addTransaction":
+                try {
+                    doAddTransaction(req,resp);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                break;
             default:
                 resp.sendRedirect("/user?action=list");
         }
+    }
+
+    private void doAddTransaction(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
+        Integer id = Integer.valueOf(req.getParameter("id"));
+        String name = req.getParameter("name");
+        String email = req.getParameter("email");
+        String country = req.getParameter("country");
+        User user = new User(id,name,email,country);
+        userService.addUserTransaction(user);
+        resp.sendRedirect("/user?action=list");
     }
 
     private void doDeleteName(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

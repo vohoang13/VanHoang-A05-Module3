@@ -1,5 +1,6 @@
 package reponsitory;
 
+import com.mysql.cj.Constants;
 import model.User;
 
 import java.sql.*;
@@ -190,6 +191,23 @@ public class UserRepository implements IUserRepository{
             callableStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void addUserTransaction(User user) throws SQLException {
+        Connection connection = this.baseRepository.getConnectionJavaToDB();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USER)){
+            connection.setAutoCommit(false);
+            preparedStatement.setInt(1,user.getId());
+            preparedStatement.setString(2,user.getName());
+            preparedStatement.setString(3,user.getEmail());
+            preparedStatement.setString(3,user.getCountry());
+            preparedStatement.executeUpdate();
+            connection.commit();
+            connection.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            connection.rollback();
         }
     }
 }

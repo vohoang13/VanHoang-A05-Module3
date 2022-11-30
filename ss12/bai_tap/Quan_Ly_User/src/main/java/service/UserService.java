@@ -4,6 +4,7 @@ import model.User;
 import reponsitory.IUserRepository;
 import reponsitory.UserRepository;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class UserService implements IUserService{
@@ -52,4 +53,11 @@ public class UserService implements IUserService{
     public void deleteByName(String name) {
         userRepository.deleteByName(name);
     }
+
+    @Override
+    public void addUserTransaction(User user) throws SQLException {
+        userRepository.addUserTransaction(user);
+    }
+
+
 }

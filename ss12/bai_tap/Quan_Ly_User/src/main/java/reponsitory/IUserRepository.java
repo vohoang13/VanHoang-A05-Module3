@@ -2,6 +2,7 @@ package reponsitory;
 
 import model.User;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface IUserRepository {
@@ -22,4 +23,6 @@ public interface IUserRepository {
     public void updateByName(User user);
 
     public void deleteByName(String name);
+
+    public void addUserTransaction(User user) throws SQLException;
 }
