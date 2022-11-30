@@ -16,4 +16,10 @@ public interface IUserService {
     public List<User> sort();
 
     public List<User> searchByCountry(String country);
+
+    public List<User> findID(int id);
+
+    public void updateByName(User user);
+
+    public void deleteByName(String name);
 }

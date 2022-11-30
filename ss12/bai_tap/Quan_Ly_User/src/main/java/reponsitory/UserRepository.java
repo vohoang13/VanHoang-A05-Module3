@@ -2,10 +2,7 @@ package reponsitory;
 
 import model.User;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -143,5 +140,58 @@ public class UserRepository implements IUserRepository{
         return users;
     }
 
+    @Override
+    public List<User> findId(int id) {
+        List<User> users = new ArrayList<>();
+        String query = "{call findbyid(?)}";
+            try(Connection connection = this.baseRepository.getConnectionJavaToDB();
+                CallableStatement callableStatement = connection.prepareCall(query)
+            ){
+                callableStatement.setInt(1,id);
+                ResultSet resultSet = callableStatement.executeQuery();
+                User user;
+                while (resultSet.next()){
+                    user = new User();
+                    user.setId(resultSet.getInt("id"));
+                    user.setName(resultSet.getString("user_name"));
+                    user.setEmail(resultSet.getString("email"));
+                    user.setCountry(resultSet.getString("country"));
+                    users.add(user);
+                }
+                resultSet.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        return users;
+    }
 
+    @Override
+    public void updateByName(User user) {
+        String query = "{call updatebyname(?,?,?)}";
+        try(Connection connection = this.baseRepository.getConnectionJavaToDB();
+                CallableStatement callableStatement = connection.prepareCall(query)
+        ){
+            callableStatement.setString(1,"%" + user.getName() + "%");
+            callableStatement.setString(2,user.getEmail());
+            callableStatement.setString(3,user.getCountry());
+            callableStatement.executeUpdate();
+        } catch (SQLException e) {
+                e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void deleteByName(String name) {
+        String query = "{call deleteuser(?)}";
+        try(Connection connection = this.baseRepository.getConnectionJavaToDB();
+            CallableStatement callableStatement = connection.prepareCall(query)
+        ){
+            callableStatement.setString(1,"%" + name + "%");
+            callableStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
+
+

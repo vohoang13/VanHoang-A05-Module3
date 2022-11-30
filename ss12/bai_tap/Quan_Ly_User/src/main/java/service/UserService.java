@@ -37,4 +37,19 @@ public class UserService implements IUserService{
     public List<User> searchByCountry(String country) {
         return userRepository.searchByCountry(country);
     }
+
+    @Override
+    public List<User> findID(int id) {
+        return userRepository.findId(id);
+    }
+
+    @Override
+    public void updateByName(User user) {
+        userRepository.updateByName(user);
+    }
+
+    @Override
+    public void deleteByName(String name) {
+        userRepository.deleteByName(name);
+    }
 }

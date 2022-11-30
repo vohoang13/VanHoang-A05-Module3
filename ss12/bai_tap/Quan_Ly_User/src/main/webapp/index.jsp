@@ -15,5 +15,8 @@
 <a href="/user?action=update">Update</a>
 <a href="/user?action=sort">Sort</a>
 <a href="/user?action=searchCountry">Search</a>
+<a href="/user?action=findById">SearchId</a>
+<a href="/user?action=updateByName">UpdateName</a>
+<a href="/user?action=deleteName">DeleteName</a>
 </body>
 </html>

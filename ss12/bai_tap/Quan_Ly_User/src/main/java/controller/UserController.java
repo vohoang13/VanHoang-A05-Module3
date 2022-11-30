@@ -4,6 +4,7 @@ import model.User;
 import service.IUserService;
 import service.UserService;
 
+import javax.jws.soap.SOAPBinding;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -43,9 +44,30 @@ public class UserController  extends HttpServlet {
             case "searchCountry":
                 showSearch(req,resp);
                 break;
+            case "findById":
+                showListId(req,resp);
+                break;
+            case "updateByName":
+                showUpdateName(req,resp);
+                break;
+            case "deleteName":
+                showDeleteName(req,resp);
+                break;
             default:
                 showList(req,resp);
         }
+    }
+
+    private void showDeleteName(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("deleteName.jsp").forward(req,resp);
+    }
+
+    private void showUpdateName(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("updateName.jsp").forward(req,resp);
+    }
+
+    private void showListId(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("searchId.jsp").forward(req,resp);
     }
 
     private void showSearch(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -96,9 +118,39 @@ public class UserController  extends HttpServlet {
             case "searchCountry":
                 doSearch(req,resp);
                 break;
+            case "findById":
+                doShowId(req,resp);
+                break;
+            case "updateByName":
+                doUpdateName(req,resp);
+                break;
+            case "deleteName":
+                doDeleteName(req,resp);
+                break;
             default:
-                resp.sendRedirect("/book?action=list");
+                resp.sendRedirect("/user?action=list");
         }
+    }
+
+    private void doDeleteName(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String name = req.getParameter("name");
+        userService.deleteByName(name);
+        resp.sendRedirect("/user?action=list");
+    }
+
+    private void doUpdateName(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String name = req.getParameter("name");
+        String country = req.getParameter("country");
+        String email = req.getParameter("email");
+        User user = new User(name,email,country);
+        userService.updateByName(user);
+        resp.sendRedirect("/user?action=list");
+    }
+
+    private void doShowId(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Integer id = Integer.valueOf(req.getParameter("id"));
+        req.setAttribute("users",userService.findID(id));
+        req.getRequestDispatcher("result.jsp").forward(req,resp);
     }
 
     private void doSearch(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

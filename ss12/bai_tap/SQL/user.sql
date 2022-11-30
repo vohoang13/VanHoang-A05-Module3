@@ -5,3 +5,11 @@ create table users (
  country varchar(120),
  constraint pk_id primary key(id)
 );
+
+DELIMITER //
+create procedure findbyid (In id int)
+begin 
+	select * from users
+    where users.id = id;
+end //
+DELIMITER ;
