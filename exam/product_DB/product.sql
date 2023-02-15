@@ -23,6 +23,9 @@ values(3,"Computer");
 insert into product
 values(1,'Iphone14',14000000,10,'pink','new 99%',1);
 
+select * from product
+where color like '%Blue%' and category_id = 1;
+
 
 drop table product;
 

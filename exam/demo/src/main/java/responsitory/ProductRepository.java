@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductRepository implements IProductRepository {
+    private final String SORT = "select * from product order by product_id desc";
+    private final String FIND_ID_COLOR = "select * from product where color like ? and category_id = ?";
     private final String FIND_ID = "select * from product where product_id = ?";
     private final String UPDATE_FRODUCT_ID = "update product set product_name = ?, product_price = ?, amount = ?, color = ?, descriptions = ?,category_id = ? where product_id = ?";
     private final String DELETE_PRODUCT_ID = "delete from product where product_id = ?";
@@ -116,5 +118,61 @@ public class ProductRepository implements IProductRepository {
         resultSet.close();
         connection.close();
         return product;
+    }
+
+    @Override
+    public List<Product> search(String color, int idCategory) {
+        List<Product> productList1 = new ArrayList<>();
+        try{
+            Connection connection = this.baseRepository.getConnectionJavaToDB();
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_ID_COLOR);
+            preparedStatement.setString(1,"%" + color + "%");
+            preparedStatement.setInt(2,idCategory);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            Product product;
+            while (resultSet.next()){
+                product = new Product();
+                product.setId(resultSet.getInt("product_id"));
+                product.setProductName(resultSet.getString("product_name"));
+                product.setPrice(resultSet.getFloat("product_price"));
+                product.setAmount(resultSet.getInt("amount"));
+                product.setColor(resultSet.getString("color"));
+                product.setDescriptions(resultSet.getString("descriptions"));
+                product.setIdCategory(resultSet.getInt("category_id"));
+                productList1.add(product);
+            }
+            resultSet.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return productList1;
+    }
+
+    @Override
+    public  List<Product> sort() {
+        List<Product> productList1 = new ArrayList<>();
+        try {
+            Connection connection = this.baseRepository.getConnectionJavaToDB();
+            PreparedStatement preparedStatement = connection.prepareStatement(SORT);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            Product product;
+            while (resultSet.next()) {
+                product = new Product();
+                product.setId(resultSet.getInt("product_id"));
+                product.setProductName(resultSet.getString("product_name"));
+                product.setPrice(resultSet.getFloat("product_price"));
+                product.setAmount(resultSet.getInt("amount"));
+                product.setColor(resultSet.getString("color"));
+                product.setDescriptions(resultSet.getString("descriptions"));
+                product.setIdCategory(resultSet.getInt("category_id"));
+                productList1.add(product);
+            }
+            resultSet.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return productList1;
     }
 }

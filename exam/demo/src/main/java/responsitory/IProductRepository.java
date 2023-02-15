@@ -15,4 +15,8 @@ public interface IProductRepository {
     public void editId(Product product);
 
     public Product findById(int id) throws SQLException;
+
+    public List<Product> search(String color, int idCategory);
+
+    public  List<Product> sort();
 }

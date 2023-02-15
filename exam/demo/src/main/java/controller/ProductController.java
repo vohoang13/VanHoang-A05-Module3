@@ -25,7 +25,7 @@ public class ProductController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
-        req.setCharacterEncoding("UTF-8");
+        resp.setCharacterEncoding("UTF-8");
         String action = req.getParameter("action");
         if (action == null) {
             action = "list";
@@ -48,9 +48,31 @@ public class ProductController extends HttpServlet {
                     throw new RuntimeException(e);
                 }
                 break;
+            case "search":
+                showSearch(req,resp);
+                break;
+            case "sort":
+                showSort(req,resp);
+                break;
             default:
                 showList(req, resp);
         }
+    }
+
+    private void showSort(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException {
+        List<Category> categoryList = iCategoryService.findAll();
+        req.setAttribute("category", categoryList);
+        req.setAttribute("product",iProductService.sort());
+        req.getRequestDispatcher("list.jsp").forward(req,resp);
+    }
+
+    private void showSearch(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+        String color = req.getParameter("color");
+        int idCategory = Integer.parseInt(req.getParameter("idCategory"));
+        List<Category> categoryList = iCategoryService.findAll();
+        req.setAttribute("category", categoryList);
+        req.setAttribute("product",iProductService.search(color,idCategory));
+        req.getRequestDispatcher("list.jsp").forward(req,resp);
     }
 
     private void showEdit(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {

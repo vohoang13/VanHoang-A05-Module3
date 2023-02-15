@@ -13,6 +13,9 @@
     <script src="bootstrap.bundle.min.js"></script>
     <title>Title</title>
     <style>
+        div {
+            margin-left: 20px;
+        }
         th{
             text-align: center;
         }
@@ -24,6 +27,11 @@
             padding: 20px;
             border-radius: 10px;
             color: white;
+        }
+        .sort{
+            background-color: #0a58ca;
+            padding: 20px;
+            border-radius: 10px;
         }
 
         table a{
@@ -45,13 +53,42 @@
         }
 
         table{
-            margin-top: 60px;
+            margin-top: 30px;
         }
     </style>
 </head>
 <body>
         <h1>Danh sách sản phẩm</h1>
-        <a class="add" href="/product?action=create">+ Add new product</a>
+        <table>
+            <tr>
+                <td><a class="add" href="/product?action=create">+ Add new product</a></td>
+                <td><a href="/product?action=sort" class="sort">Sort</a></td>
+            </tr>
+        </table>
+
+        <div>
+            <form action="/product">
+                <table>
+                    <tr>
+                        <td>
+                            <input type="text" name="color" class="form-control" placeholder="What are you looking for?">
+                        </td>
+                        <td>
+                            <select name="idCategory" class="form-select">
+                                <option>List Category</option>
+                                <c:forEach items="${category}" var="categories">
+                                    <option value="${categories.id}">${categories.name}</option>
+                                </c:forEach>
+                            </select>
+                        </td>
+                        <td>
+                            <button class="btn btn-primary" type="submit">Search</button>
+                        </td>
+                    </tr>
+                </table>
+                <input type="hidden" name="action" value="search">
+            </form>
+        </div>
         <table class="table table-striped">
             <tr>
                 <th>ID</th>

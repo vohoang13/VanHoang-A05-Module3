@@ -30,7 +30,18 @@ public class ProductService implements IProductService{
     }
 
     @Override
+    public List<Product> search(String color, int idCategory) {
+        return iProductRepository.search(color,idCategory);
+    }
+
+    @Override
+    public List<Product> sort() {
+        return iProductRepository.sort();
+    }
+
+    @Override
     public void editId(Product product) {
         iProductRepository.editId(product);
     }
+
 }
